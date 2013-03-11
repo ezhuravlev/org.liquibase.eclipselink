@@ -1,0 +1,219 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>org.liquibase.ext</groupId>
+	<artifactId>org.liquibase.eclipselink</artifactId>
+	<version>0.2.2-SNAPSHOT</version>
+	<packaging>bundle</packaging>
+	
+	<name>Liquibase Extension - EclipseLink Schema Snapshot Generator</name>
+
+	<properties>
+		<java.version>1.6</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<maven-compiler-plugin>3.0</maven-compiler-plugin>
+		<maven-bundle-plugin>2.3.7</maven-bundle-plugin>
+		<maven-resources-plugin>2.6</maven-resources-plugin>
+		<maven-surefire-plugin>2.13</maven-surefire-plugin>
+		<maven-jar-plugin>2.4</maven-jar-plugin>
+		<maven-release-plugin>2.4</maven-release-plugin>
+		<maven-build-helper-plugin>1.7</maven-build-helper-plugin>
+				
+		<vcs.repository.url>http://192.168.11.89:8080/ru.ventra</vcs.repository.url>
+		
+		<org.liquibase>2.0.5</org.liquibase>
+		<org.eclipse.persistence>2.4.0</org.eclipse.persistence>
+		<org.h2>1.3.170</org.h2>
+		<org.junit>4.7.0</org.junit>
+	</properties>
+	
+	<scm>
+		<connection>scm:svn:${vcs.repository.url}/trunk/${project.artifactId}</connection>
+	</scm>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-osgi</artifactId>
+				<version>${org.liquibase}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.persistence</groupId>
+				<artifactId>org.eclipse.persistence.osgi</artifactId>
+				<version>${org.eclipse.persistence}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>${org.h2}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>com.springsource.org.junit</artifactId>
+				<version>${org.junit}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-osgi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>org.eclipse.persistence.osgi</artifactId>
+		</dependency>
+		<!-- Tests -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit</groupId>
+			<artifactId>com.springsource.org.junit</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin}</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${maven-resources-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven-surefire-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${maven-jar-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>${maven-release-plugin}</version>
+					<configuration>
+						<branchBase>${vcs.repository.url}/branches</branchBase>
+						<tagBase>${vcs.repository.url}/tags</tagBase>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>${maven-bundle-plugin}</version>
+					<extensions>true</extensions>
+					<configuration>
+						<excludeDependencies>*;classifier=sources</excludeDependencies>
+						<instructions>
+							<obrRepository>NONE</obrRepository>
+							<manifestLocation>META-INF</manifestLocation>
+							<Bundle-Vendor>${project.organization.name}</Bundle-Vendor>
+							<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+							<Bundle-Name>${project.name}</Bundle-Name>
+							<Bundle-RequiredExecutionEnvironment>JavaSE-1.6</Bundle-RequiredExecutionEnvironment>
+							<Liquibase-Package>org.liquibase.eclipselink</Liquibase-Package>
+	                    	<_removeheaders>
+	                    		Bnd-LastModified,
+	                    		Built-By,
+	                    		Build-Jdk,
+	                    		Bundle-DocURL,
+	                    		Created-By,
+	                    		Ignore-Package,
+	                    		Include-Resource,
+	                    		Private-Package,
+	                    		Tool
+	                    	</_removeheaders>
+							<_versionpolicy>
+						    	[$(version;==;$(@)),$(version;+;$(@)))
+						    </_versionpolicy>
+						</instructions>
+	                    <archive>
+                        	<addMavenDescriptor>false</addMavenDescriptor>
+	                    </archive>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		
+		<plugins>		
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<organization>
+		<name>Ventra Employment</name>
+		<url>http://ventra.ru</url>
+	</organization>
+
+	<issueManagement>
+		<url>https://redmine.ventra.ru</url>
+		<system>Redmine</system>
+	</issueManagement>
+
+	<distributionManagement>
+		<repository>
+			<id>ru.ventra.ebr.public</id>
+			<url>https://ebr.ventra.ru/public</url>
+		</repository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>ru.ventra.ebr.public</id>
+			<name>Ventra Enterprise Bundle Repository - Public Releases</name>
+			<url>https://ebr.ventra.ru/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>ru.ventra.ebr.external</id>
+			<name>Ventra Enterprise Bundle Repository - External</name>
+			<url>https://ebr.ventra.ru/external</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>ru.ventra.ebr.public</id>
+			<name>Ventra Enterprise Bundle Repository - Public Releases</name>
+			<url>https://ebr.ventra.ru/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>ru.ventra.ebr.external</id>
+			<name>Ventra Enterprise Bundle Repository - External</name>
+			<url>https://ebr.ventra.ru/external</url>
+		</pluginRepository>
+	</pluginRepositories>
+</project>
