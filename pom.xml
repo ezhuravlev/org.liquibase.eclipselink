@@ -28,7 +28,7 @@
     </properties>
 
     <scm>
-        <connection>scm:git:git://github.com/ezhuravlev/org.liquibase.eclipselink.git</connection>
+        <connection>scm:git:git@github.com:ezhuravlev/org.liquibase.eclipselink.git</connection>
     </scm>
 
     <distributionManagement>
