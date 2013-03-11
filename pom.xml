@@ -18,6 +18,9 @@
         <maven-resources-plugin>2.6</maven-resources-plugin>
         <maven-surefire-plugin>2.13</maven-surefire-plugin>
         <maven-jar-plugin>2.4</maven-jar-plugin>
+        <maven-javadoc-plugin>2.9</maven-javadoc-plugin>
+        <maven-deploy-plugin>2.7</maven-deploy-plugin>
+        <maven-source-plugin>2.2.1</maven-source-plugin>
         <maven-release-plugin>2.4</maven-release-plugin>
 
         <org.liquibase>2.0.5</org.liquibase>
@@ -112,6 +115,21 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>${maven-jar-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
