@@ -4,7 +4,7 @@
 
     <groupId>org.liquibase.ext</groupId>
     <artifactId>org.liquibase.eclipselink</artifactId>
-    <version>0.2.2</version>
+    <version>0.2.3-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <name>Liquibase Extension - EclipseLink Schema Snapshot Generator</name>
@@ -28,7 +28,7 @@
 
     <scm>
         <connection>scm:git:git@github.com:ezhuravlev/org.liquibase.eclipselink.git</connection>
-      <tag>org.liquibase.eclipselink-0.2.2</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <distributionManagement>
